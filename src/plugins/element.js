@@ -1,0 +1,64 @@
+import Vue from "vue";
+import {
+  Button,
+  Scrollbar,
+  Icon,
+  Avatar,
+  Image,
+  Tabs,
+  TabPane,
+  Carousel,
+  CarouselItem,
+  Input,
+  Form,
+  Option,
+  Select,
+  FormItem,
+  MessageBox,
+  Divider,
+  InfiniteScroll,
+  Container,
+  Aside,
+  Header,
+  Main,
+  Footer,
+  Row,
+  Col,
+  Popover,
+  Tooltip,
+  Dialog,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem
+} from "element-ui";
+
+Vue.use(Button);
+Vue.use(Scrollbar);
+Vue.use(Icon);
+Vue.use(Avatar);
+Vue.use(Image);
+Vue.use(Tabs);
+Vue.use(Divider);
+Vue.use(TabPane);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
+Vue.use(Input);
+Vue.use(Form);
+Vue.use(Option);
+Vue.use(Select);
+Vue.use(FormItem);
+Vue.use(InfiniteScroll);
+Vue.use(Container);
+Vue.use(Aside);
+Vue.use(Header);
+Vue.use(Main);
+Vue.use(Footer);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Popover);
+Vue.use(Tooltip);
+Vue.use(Dialog);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.prototype.$alert = MessageBox.alert;
