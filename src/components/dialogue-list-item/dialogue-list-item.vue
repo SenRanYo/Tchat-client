@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话列表项组件
  * @Date: 2020-02-25 11:09:47
- * @LastEditTime: 2020-02-26 00:03:50
+ * @LastEditTime: 2020-02-26 00:43:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\DialogueListBar.vue
@@ -58,11 +58,12 @@
         <span
           class="message"
           :title="
-            verifyMessage(dialogueData.message_type, dialogueData.content)
+            verifyFriendMessage(dialogueData.message_type, dialogueData.content)
           "
         >
-          <!-- {{ dialogueData.content }} -->
-          {{ verifyMessage(dialogueData.message_type, dialogueData.content) }}
+          {{
+            verifyFriendMessage(dialogueData.message_type, dialogueData.content)
+          }}
         </span>
         <!-- 未读条数 -->
         <span class="unread" v-if="dialogueData.unread > 0">
@@ -74,13 +75,28 @@
         class="item__right__bottom"
         v-if="dialogueData.dialogue_type == 'group'"
       >
-        <span v-if="dialogueData.dialogue_type == 'friend'" class="message">
-          {{ dialogueData.content }}
-        </span>
         <span
-          v-if="dialogueData.dialogue_type == 'group'"
           class="message"
-        ></span>
+          :title="
+            verifyGroupMessage(
+              dialogueData.message_type,
+              dialogueData.content,
+              dialogueData.send_user
+            )
+          "
+        >
+          {{
+            verifyGroupMessage(
+              dialogueData.message_type,
+              dialogueData.content,
+              dialogueData.send_user
+            )
+          }}
+        </span>
+        <!-- 未读条数 -->
+        <span class="unread" v-if="dialogueData.unread > 0">
+          {{ dialogueData.unread > 99 ? "99+" : dialogueData.unread }}
+        </span>
       </div>
       <!-- 删除会话按钮 -->
       <div
@@ -114,8 +130,8 @@ export default {
   computed: {
     // 映射Getters
     ...mapGetters(["dialogueId"]),
-    // 效验消息类型
-    verifyMessage() {
+    // 效验好友消息类型
+    verifyFriendMessage() {
       return (type, value) => {
         if (type == undefined || type == null || type == "") {
           return "暂无消息内容";
@@ -127,6 +143,24 @@ export default {
           return "[分享]";
         } else if (type == "voice") {
           return "[语音消息]";
+        } else if (type == "system") {
+          return "[系统消息]";
+        }
+      };
+    },
+    // 效验群聊消息类型
+    verifyGroupMessage() {
+      return (type, value, user) => {
+        if (type == undefined || type == null || type == "") {
+          return "暂无消息内容";
+        } else if (type == "text") {
+          return `${user}:${value}`;
+        } else if (type == "image") {
+          return `${user}:[图片]`;
+        } else if (type == "share") {
+          return `${user}:[分享]`;
+        } else if (type == "voice") {
+          return `${user}:[语音消息]`;
         } else if (type == "system") {
           return "[系统消息]";
         }
