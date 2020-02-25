@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-11 11:52:17
+ * @LastEditTime: 2020-02-25 20:03:09
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \tchat-client\src\views\Home.vue
+ -->
 <template>
   <div class="home">
-    <HomeNav></HomeNav>
+    <HomeNavigation></HomeNavigation>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
@@ -8,10 +16,8 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import HomeNav from "./components/HomeNav";
 export default {
-  name: "home",
-  components: { HomeNav },
+  name: "Home",
   data() {
     return {};
   },
@@ -25,7 +31,7 @@ export default {
 </script>
 <style lang="scss">
 .home {
-  width: 65%;
+  width: 90%;
   max-width: 1200px;
   height: 80%;
   overflow: hidden;

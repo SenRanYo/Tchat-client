@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-02-11 19:31:00
+ * @LastEditTime: 2020-02-20 22:37:07
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tchat-client\src\api\index.js
+ */
 let baseUrl = "";
 // 开发环境
 if (process.env.NODE_ENV === "development") {
@@ -5,7 +13,7 @@ if (process.env.NODE_ENV === "development") {
 }
 // 上线环境
 if (process.env.NODE_ENV === "production") {
-  baseUrl = "http://localhost:3000";
+  baseUrl = "http://tchat-server.vipnps.vip";
 }
 // api
 const api = {

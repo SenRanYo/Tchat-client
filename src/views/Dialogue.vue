@@ -1,272 +1,45 @@
 <template>
+  <!-- 会话页 -->
   <div class="dialogue">
-    <div class="dialogue-list">
-      <div class="dialogue-list__head">
-        <p class="list-title">会话列表</p>
-        <p class="list-tips">共10个会话</p>
-      </div>
-      <SearchLinkman></SearchLinkman>
-      <div class="dialogue-list__content">
-        <ChatList :itemData="friendListData"></ChatList>
+    <!-- 会话页左边 -->
+    <div class="dialogue__left">
+      <!-- 列表栏头部组件 -->
+      <ListBarHead headTitle="会话列表" headNumber="共10条会话"></ListBarHead>
+      <!-- 列表栏搜索组件 -->
+      <ListBarSearch></ListBarSearch>
+      <!-- 列表栏列表 -->
+      <div class="dialogue-list">
+        <el-scrollbar>
+          <DialogueListItem
+            v-for="(item, index) in dialogueData"
+            :key="index"
+            :dialogueData="item"
+          ></DialogueListItem>
+        </el-scrollbar>
       </div>
     </div>
-    <ChatBar></ChatBar>
-    <InfoBar></InfoBar>
+    <!-- 会话页右边 -->
+    <div class="dialogue__right">
+      <ChatBar></ChatBar>
+    </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name: "dialogue",
+  name: "Dialogue",
   data() {
-    return {
-      friendListData: [
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          userType: 0,
-          facility: "Chorme",
-          type: "friend"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          userType: 1,
-          facility: "Edge",
-          type: "friend"
-        }
-      ],
-      groupListData: [
-        {
-          name: "Tchat群聊",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          bulletin: "测试群公告",
-          type: "group"
-        }
-      ],
-      dialogueListData: [
-        {
-          remarkName: "",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          userType: 1,
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          remarkName: "",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          name: "Tchat群聊",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          bulletin: "测试群公告",
-          time: "20:00",
-          lastMessage: "测试会话列表群聊消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          remarkName: "",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          name: "Tchat群聊",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          bulletin: "测试群公告",
-          time: "20:00",
-          lastMessage: "测试会话列表群聊消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          remarkName: "",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          name: "Tchat群聊",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          bulletin: "测试群公告",
-          time: "20:00",
-          lastMessage: "测试会话列表群聊消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          remarkName: "",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          name: "Tchat群聊",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          bulletin: "测试群公告",
-          time: "20:00",
-          lastMessage: "测试会话列表群聊消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          remarkName: "",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "friendDialogue"
-        },
-        {
-          name: "Tchat群聊",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          bulletin: "测试群公告",
-          time: "20:00",
-          lastMessage: "测试会话列表群聊消息",
-          type: "groupDialogue"
-        },
-        {
-          remarkName: "测试备注",
-          name: "飞翔的企鹅",
-          avatar:
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-          signature: "测试个性签名",
-          onlineStatus: true,
-          time: "20:00",
-          lastMessage: "测试会话列表好友消息",
-          type: "groupDialogue"
-        }
-      ]
-    };
-  }
+    return {};
+  },
+  computed: {
+    ...mapGetters(["friendList", "groupList"]),
+    dialogueData() {
+      let data = [...this.friendList, ...this.groupList];
+      return data;
+    }
+  },
+  created() {},
+  methods: {}
 };
 </script>
 <style lang="scss">
@@ -275,40 +48,36 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  // 会话列表
-  .dialogue-list {
+  // 会话页左边
+  .dialogue__left {
     width: 250px;
     height: 100%;
-    background-color: #6e6f8d;
+    background: #6e6f8d;
     display: flex;
     flex-direction: column;
-    // 列表头部
-    .dialogue-list__head {
-      height: 50px;
-      padding: 0 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      // 标题
-      .list-title {
-        color: #efefef;
-      }
-      // 提示
-      .list-tips {
-        color: #cfcfcf;
-      }
-    }
-    // 会话列表内容
-    .dialogue-list__content {
+    .dialogue-list {
+      width: 250px;
       height: calc(100% - 100px);
-      cursor: default;
+      // 列表滚动栏样式
       .el-scrollbar {
         height: 100%;
         .el-scrollbar__wrap {
           overflow-x: hidden;
+          user-select: none;
+          cursor: default;
         }
       }
     }
+  }
+  // 会话页右边
+  .dialogue__right {
+    width: calc(100% - 250px);
+    height: 100%;
+    background-color: #fff;
+    background-image: url("../assets/img/ikon.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 680px 400px;
   }
 }
 </style>

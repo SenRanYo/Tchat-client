@@ -1,17 +1,13 @@
 <template>
+  <!-- 群聊页 -->
   <div class="group">
-    <div class="group-list">
-      <ChatListHead
-        title="群聊列表"
-        :hint="`共${groupList.length}个群聊`"
-      ></ChatListHead>
-      <SearchLinkman></SearchLinkman>
-      <div class="group-list__content">
-        <ChatList :itemData="groupList"></ChatList>
-      </div>
+    <div class="group__left">
+      <!-- 列表组件 -->
+      <ListBar listBarType="group"></ListBar>
     </div>
-    <ChatBar></ChatBar>
-    <InfoBar></InfoBar>
+    <div class="group__right">
+      <InfoBar infoBarType="group"></InfoBar>
+    </div>
   </div>
 </template>
 <script>
@@ -19,10 +15,22 @@ import { mapGetters } from "vuex";
 export default {
   name: "Group",
   data() {
-    return {};
+    return {
+      infoBarData: {}
+    };
   },
   computed: {
     ...mapGetters(["groupList"])
+  },
+  created() {
+    // console.log(this.groupList);
+  },
+  methods: {
+    // 获取群聊信息
+    getGroupInfo(data) {
+      this.infoBarData = data;
+      console.log(data);
+    }
   }
 };
 </script>
@@ -32,18 +40,20 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  // 会话列表
-  .group-list {
+  // 群聊页左边
+  .group__left {
     width: 250px;
     height: 100%;
-    background-color: #6e6f8d;
-    display: flex;
-    flex-direction: column;
-    // 会话列表内容
-    .group-list__content {
-      height: calc(100% - 100px);
-      cursor: default;
-    }
+  }
+  // 群聊页右边
+  .group__right {
+    width: calc(100% - 250px);
+    height: 100%;
+    background-color: #fff;
+    background-image: url("../assets/img/ikon.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 680px 400px;
   }
 }
 </style>

@@ -1,37 +1,22 @@
-import * as types from "../mutation-types";
-// import { MessageBox } from "element-ui";
-
+/*
+ * @Author: 会话模块
+ * @Date: 2020-02-25 19:42:55
+ * @LastEditTime: 2020-02-25 20:43:03
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tchat-client\src\store\modules\dialogue.js
+ */
 const state = {
-  dialogueList: []
+  dialogueId: ""
 };
 
 const mutations = {
-  [types.SET_DIALOGUE_LIST](state, data) {
-    state.dialogueList = data;
-  }
-};
-
-const actions = {
-  getDialogueList({ commit, rootState }) {
-    rootState.socket.emit("getDialogueList", response => {
-      if (response.result) {
-        commit(types.SET_DIALOGUE_LIST, response.data);
-        console.log("提示：获取好友列表成功");
-      }
-    });
-  },
-  onGetDialogueList({ commit, rootState }) {
-    rootState.socket.on("onGetDialogueList", response => {
-      if (response.result) {
-        commit(types.SET_DIALOGUE_LIST, response.data);
-        console.log("提示：更新好友列表成功");
-      }
-    });
+  setDialogueId(state, id) {
+    state.dialogueId = id;
   }
 };
 
 export default {
   state,
-  mutations,
-  actions
+  mutations
 };

@@ -1,4 +1,5 @@
 import Vue from "vue";
+// import Store from "../store/index";
 import VueRouter from "vue-router";
 // 一级路由
 import Home from "../views/Home.vue";
@@ -37,4 +38,11 @@ const router = new VueRouter({
   routes
 });
 
+// 路由守卫
+router.afterEach((to, from) => {
+  // 切换到login页时
+  if (to.name === "login" && from.name !== null) {
+    // window.location.reload();
+  }
+});
 export default router;

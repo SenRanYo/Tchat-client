@@ -1,7 +1,16 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-11 20:33:01
+ * @LastEditTime: 2020-02-24 19:39:13
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tchat-client\src\components\Avatar.vue
+ -->
 <template>
   <div
-    class="user-avatar"
-    :class="{ 'user-avatar--grayscale': status == false }"
+    class="avatar"
+    :class="{ 'avatar--grayscale': !status && isStatus }"
+    :style="{ width: size + 'px', height: size + 'px' }"
   >
     <!-- 头像组件 -->
     <el-avatar :src="src" :size="size" :shape="shape">
@@ -10,7 +19,7 @@
     <!-- Github图标 -->
     <eva-icon
       v-if="userType == 1"
-      class="user-avatar__icon"
+      class="avatar__icon"
       name="github-outline"
       fill="#6AC383"
       width="12px"
@@ -20,7 +29,7 @@
 </template>
 <script>
 export default {
-  name: "UserAvatar",
+  name: "Avatar",
   props: {
     // 资源地址
     src: {
@@ -30,10 +39,9 @@ export default {
     content: {
       type: String
     },
-    // 用户状态
+    // 在线状态状态
     status: {
-      type: Boolean,
-      default: true
+      type: Boolean
     },
     // 用户类型
     userType: {
@@ -42,23 +50,29 @@ export default {
     },
     // 头像大小
     size: {
-      type: Number
+      type: Number,
+      default: 40
     },
     // 头像形状
     shape: {
       type: String,
       default: "circle"
+    },
+    // 是否需要检测状态
+    isStatus: {
+      type: Boolean,
+      default: true
     }
   }
 };
 </script>
 <style lang="scss">
-.user-avatar {
+.avatar {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  .user-avatar__icon {
+  .avatar__icon {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -68,7 +82,7 @@ export default {
     background-color: #fff;
   }
 }
-.user-avatar--grayscale {
+.avatar--grayscale {
   filter: grayscale(100%);
 }
 </style>

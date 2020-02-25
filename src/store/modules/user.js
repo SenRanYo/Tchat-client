@@ -1,4 +1,11 @@
-import * as types from "../mutation-types";
+/*
+ * @Author: your name
+ * @Date: 2020-02-11 19:35:10
+ * @LastEditTime: 2020-02-25 21:13:08
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tchat-client\src\store\modules\user.js
+ */
 import router from "../../router";
 import axios from "../../api/axiosConfig";
 import api from "../../api/index";
@@ -9,7 +16,7 @@ const state = {
 };
 
 const mutations = {
-  [types.SET_USER_INFO](state, data) {
+  setUserInfo(state, data) {
     state.userInfo = data;
   }
 };
@@ -36,9 +43,9 @@ const actions = {
       .post(api.login, data)
       .then(response => {
         if (response.result) {
-          commit(types.SET_TOKEN, response.data);
+          commit("setToken", response.data);
           localStorage.setItem("token", JSON.stringify(response.data.token));
-          router.push({ path: "/home" });
+          router.push({ path: "/home/dialogue" });
           console.log(`提示：${response.message}`);
         } else {
           MessageBox.alert(response.message, "Tchat", {
@@ -68,17 +75,11 @@ const actions = {
       });
   },
   // 获取用户信息
-  getUserInfo({ commit, rootState }) {
-    rootState.socket.emit(
-      "getUserInfo",
-      { token: rootState.token },
-      response => {
-        if (response.result) {
-          commit(types.SET_USER_INFO, response.data);
-          console.log("提示：获取登陆用户信息成功");
-        }
-      }
-    );
+  onGetUserInfo({ commit, rootState }) {
+    rootState.socket.on("onGetUserInfo", response => {
+      commit("setUserInfo", response.data);
+      console.log("登陆用户信息数据", response.data);
+    });
   }
 };
 

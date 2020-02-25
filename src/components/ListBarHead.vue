@@ -1,10 +1,10 @@
 <template>
-  <div class="chat-list-head">
-    <div class="chat-list-head__left">
-      <p class="list-title">{{ title }}</p>
-      <p class="list-hint">{{ hint }}</p>
+  <div class="list-bar_head">
+    <div class="list-bar_head__left">
+      <p class="list-title">{{ headTitle }}</p>
+      <p class="list-hint">{{ headNumber }}</p>
     </div>
-    <div class="chat-list-head__right">
+    <div class="list-bar_head__right">
       <el-dropdown
         trigger="click"
         size="small"
@@ -50,12 +50,13 @@
             :key="index"
           >
             <div class="list-item__top">
-              <UserAvatar
+              <Avatar
                 :src="item.avatar"
                 :content="item.name"
                 :userType="item.userType"
+                :isStatus="false"
                 :size="80"
-              ></UserAvatar>
+              ></Avatar>
               <div class="list-item__top__content">
                 <p class="name">
                   <span>
@@ -111,7 +112,7 @@
         <el-input
           size="small"
           placeholder="请输入群聊名"
-          v-model="searchUserName"
+          v-model="searchGroupName"
         >
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
@@ -125,17 +126,19 @@
           <p v-if="userListData.length == 0" class="content-hint">暂无内容</p>
           <li
             class="list-item"
-            v-for="(item, index) in userListData"
+            v-for="(item, index) in groupListData"
             :key="index"
           >
             <div class="list-item__top">
-              <UserAvatar
+              <Avatar
                 :src="item.avatar"
                 :content="item.name"
                 :userType="item.userType"
+                :isStatus="false"
                 :size="80"
-              ></UserAvatar>
+              ></Avatar>
               <div class="list-item__top__content">
+                <!-- 群名 -->
                 <p class="name">
                   <span>
                     {{ item.name.slice(0, item.name.indexOf(groupKeyWord)) }}
@@ -156,11 +159,13 @@
                     }}
                   </span>
                 </p>
-                <p class="sex-age">
-                  <span>性别：{{ item.sex }}</span
-                  ><span>年龄：{{ item.age }}</span>
+                <!-- 创建人-人数 -->
+                <p>
+                  <span>创建者：{{ item.creator_name }}</span
+                  ><span>人数：{{ item.user_sum }}</span>
                 </p>
-                <p class="signature">{{ item.signature }}</p>
+                <!-- 群介绍 -->
+                <p class="signature">{{ item.introduce }}</p>
               </div>
             </div>
             <div class="list-item__bottom">
@@ -169,7 +174,14 @@
                 size="mini"
                 @click="addGroupHandle(item._id)"
               >
-                加好友
+                加入群聊
+              </el-button>
+              <el-button
+                type="success"
+                size="mini"
+                @click="addGroupNotice(item._id)"
+              >
+                测试发布公告
               </el-button>
             </div>
           </li>
@@ -221,12 +233,12 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "ChatListHead",
+  name: "ListBarHead",
   props: {
-    title: {
+    headTitle: {
       type: String
     },
-    hint: {
+    headNumber: {
       type: String
     }
   },
@@ -243,7 +255,6 @@ export default {
       groupListData: [],
       groupForm: {
         name: "",
-        bulletin: "",
         introduce: ""
       }
     };
@@ -269,20 +280,20 @@ export default {
       this.userKeyWord = this.searchUserName;
       this.socket.emit(
         "searchUser",
-        { name: this.searchUserName },
+        { userName: this.searchUserName },
         response => {
           if (!response.result) {
             this.$alert(response.message, "提示");
           }
           this.userListData = response.data;
-          console.log(this.userListData);
+          console.log(response);
         }
       );
     },
     // 添加好友处理
     addFriendHandle(id) {
       this.socket.emit("addFriend", { friendId: id }, response => {
-        this.$alert(response.message, "提示");
+        console.log(response);
       });
     },
     // 添加好友弹窗关闭处理
@@ -294,7 +305,7 @@ export default {
     },
     // 搜索群聊处理
     searchGroupHandle() {
-      this.userKeyWord = this.searchUserName;
+      this.groupKeyWord = this.searchGroupName;
       this.socket.emit(
         "searchGroup",
         { name: this.searchGroupName },
@@ -303,15 +314,26 @@ export default {
             this.$alert(response.message, "提示");
           }
           this.groupListData = response.data;
-          console.log(this.groupListData);
+          console.log(response);
         }
       );
     },
     // 添加群聊处理
     addGroupHandle(id) {
       this.socket.emit("addGroup", { groupId: id }, response => {
-        this.$alert(response.message, "提示");
+        // this.$alert(response.message, "提示");
+        console.log(response);
       });
+    },
+    // 测试添加公告
+    addGroupNotice(id) {
+      this.socket.emit(
+        "addGroupNotice",
+        { groupId: id, notice: "测试数据" },
+        response => {
+          console.log(response);
+        }
+      );
     },
     // 添加群聊弹窗关闭处理
     addGroupDialogClose(done) {
@@ -323,20 +345,18 @@ export default {
     // 创建群聊处理
     createGroupHandle() {
       this.socket.emit("createGroup", this.groupForm, response => {
-        this.$alert(response.message, "提示");
+        console.log(response);
       });
     },
     // 创建群聊弹窗关闭处理
     createGroupDialogClose(done) {
       this.groupForm.name = "";
-      this.groupForm.bulletin = "";
       this.groupForm.introduce = "";
       done();
     },
     // 关闭创建群聊弹窗
     closeCreateGroupDialog() {
       this.groupForm.name = "";
-      this.groupForm.bulletin = "";
       this.groupForm.introduce = "";
       this.dialogCreateGroupVisible = false;
     }
@@ -346,7 +366,7 @@ export default {
 
 <style lang="scss">
 // 列表顶部样式
-.chat-list-head {
+.list-bar_head {
   width: 250px;
   height: 50px;
   padding: 0 10px;
@@ -362,7 +382,7 @@ export default {
   .list-hint {
     color: #cfcfcf;
   }
-  .chat-list-head__right {
+  .list-bar_head__right {
     cursor: pointer;
   }
 }

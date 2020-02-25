@@ -6,13 +6,13 @@
     </div>
     <!-- 主体内容 -->
     <div class="info-bar__main">
-      <UserAvatar
+      <Avatar
         :src="userInfo.avatar"
         :content="userInfo.name"
         :status="userInfo.onlineStatus"
         :userType="userInfo.type"
         :size="100"
-      ></UserAvatar>
+      ></Avatar>
       <p class="info-bar__user-name">
         {{ userInfo.name }}
       </p>
@@ -80,7 +80,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "InfoBar",
+  name: "ChatBarInfo",
   data() {
     return {};
   },
@@ -92,7 +92,7 @@ export default {
 
 <style lang="scss">
 // 信息栏
-.info-bar {
+.info-bar2 {
   width: 250px;
   height: 100%;
   display: flex;

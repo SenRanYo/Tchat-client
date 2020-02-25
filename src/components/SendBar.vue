@@ -41,12 +41,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "SendBar",
   data() {
     return {
       sendContent: ""
     };
+  },
+  computed: {
+    ...mapGetters(["socket"])
   },
   methods: {
     // 插入Emoji
@@ -65,7 +69,17 @@ export default {
     },
     // 发送消息
     sendHandle() {
-      console.log("发送消息");
+      this.socket.emit(
+        "sendGroupMessage",
+        {
+          groupId: "5e533e152f629e1fdcb1344c",
+          messageType: "text",
+          content: this.sendContent
+        },
+        res => {
+          console.log(res);
+        }
+      );
     },
     // 回车发送消息
     enterSendHandle() {
