@@ -20,7 +20,7 @@ export const actions = {
       // 用户相关
       dispatch("onGetUserInfo");
       // 消息相关
-      dispatch("onGetAllMessageRecord");
+      dispatch("onGetMessageRecord");
       // 好友相关
       dispatch("onGetFriendList");
       dispatch("onGetFriendStatus");

@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话列表项组件
  * @Date: 2020-02-25 11:09:47
- * @LastEditTime: 2020-02-27 22:08:20
+ * @LastEditTime: 2020-02-28 00:26:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\DialogueListBar.vue
@@ -171,12 +171,22 @@ export default {
   },
   methods: {
     // 映射Actions
-    ...mapActions(["deleteFriendDialogue", "deleteGroupDialogue"]),
+    ...mapActions([
+      "deleteFriendDialogue",
+      "deleteGroupDialogue",
+      "getMessageRecord"
+    ]),
     // 映射Mutations
     ...mapMutations(["setDialogueInfo"]),
     // 点击会话处理
     clickDialogueHandle() {
+      // 设置会话数据
       this.setDialogueInfo(this.dialogueData);
+      // 获取消息记录
+      this.getMessageRecord({
+        type: this.dialogueData.dialogue_type,
+        id: this.dialogueData._id
+      });
     },
     // 删除会话处理
     deleteDialogueHandle(id, type) {
