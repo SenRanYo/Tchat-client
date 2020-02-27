@@ -1,75 +1,79 @@
 <!--
- * @Author: 好友信息
- * @Date: 2020-02-25 21:48:40
- * @LastEditTime: 2020-02-27 20:10:40
+ * @Author: 群聊信息
+ * @Date: 2020-02-26 22:31:56
+ * @LastEditTime: 2020-02-27 22:16:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \tchat-client\src\components\friend-info\friend-info.vue
+ * @FilePath: \tchat-client\src\components\group-info\group-info.vue
  -->
 <template>
-  <div class="friend-info" v-if="!objectIsEmpty(friendInfo)">
+  <div class="friend-info" v-if="!objectIsEmpty(groupInfo)">
+    <!-- 头部内容 -->
     <div class="friend-info__head">
+      <!-- 群名称 -->
       <div class="left-container">
-        <p class="name">{{ friendInfo.name }}</p>
+        <p class="name">{{ groupInfo.name }}</p>
       </div>
+      <!-- 操作按钮 -->
       <div class="right-container">
         <eva-icon
           class="button"
-          title="删除好友"
+          title="退出群聊"
           name="person-delete-outline"
           fill="#ADADAF"
-          @click="deleteFriendHandle"
+          @click="quitGroupHandle"
         ></eva-icon>
         <eva-icon
           class="button"
-          title="修改备注"
+          title="修改群昵称"
           name="edit-2-outline"
           fill="#ADADAF"
-          @click="editRemarkNameHandle"
+          @click="editNicknameHandle"
         ></eva-icon>
         <eva-icon
           class="button"
-          title="分享此好友"
+          title="分享此群聊"
           name="share"
           fill="#ADADAF"
-          @click="shareFriendHandle"
+          @click="shareGroupHandle"
         ></eva-icon>
       </div>
     </div>
+    <!-- 主体内容 -->
     <div class="friend-info__main">
+      <!-- 左边内容 -->
       <div class="left-container">
         <!-- 用户头像 -->
         <el-image
-          :src="friendInfo.avatar"
-          :preview-src-list="[friendInfo.avatar]"
+          :src="groupInfo.avatar"
+          :preview-src-list="[groupInfo.avatar]"
           fit="cover"
         >
         </el-image>
       </div>
+      <!-- 右边内容 -->
       <div class="right-container">
-        <p class="name">{{ friendInfo.name }}</p>
-        <p class="signature" :title="friendInfo.signature">
-          {{ friendInfo.signature }}
+        <p class="name">{{ groupInfo.name }}</p>
+        <p class="signature" :title="groupInfo.signature">
+          {{ groupInfo.signature }}
         </p>
         <div class="detail-container">
           <p>
-            备注：{{
-              friendInfo.remark_name ? friendInfo.remark_name : "未设置"
-            }}
+            备注：{{ groupInfo.remark_name ? groupInfo.remark_name : "未设置" }}
           </p>
-          <p>性别：{{ friendInfo.sex }}</p>
-          <p>年龄：{{ friendInfo.age }}</p>
-          <p>QQ：{{ friendInfo.qq }}</p>
-          <p>微信：{{ friendInfo.weixin }}</p>
-          <p>邮箱：{{ friendInfo.email }}</p>
-          <p>Github：{{ friendInfo.github }}</p>
+          <p>性别：{{ groupInfo.sex }}</p>
+          <p>年龄：{{ groupInfo.age }}</p>
+          <p>QQ：{{ groupInfo.qq }}</p>
+          <p>微信：{{ groupInfo.weixin }}</p>
+          <p>邮箱：{{ groupInfo.email }}</p>
+          <p>Github：{{ groupInfo.github }}</p>
         </div>
         <div class="button-container">
           <el-button
             type="primary"
             size="small"
             round
-            @click="friendDialogueHandle"
+            @click="groupDialogueHandle"
             >发送消息</el-button
           >
         </div>
@@ -85,36 +89,36 @@
 import Mixin from "../../mixins/index";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
-  name: "FriendInfo",
+  name: "GroupInfo",
   data() {
     return {};
   },
   mixins: [Mixin],
   computed: {
     // 映射Getters
-    ...mapGetters(["friendInfo"])
+    ...mapGetters(["groupInfo"])
   },
   methods: {
     // 映射Actions
-    ...mapActions(["addFriendDialogue"]),
+    ...mapActions(["addGroupDialogue"]),
     // 映射Mutations
     ...mapMutations(["setDialogueInfo"]),
-    // 删除好友
-    deleteFriendHandle() {
-      console.log("删除好友处理");
+    // 提出群聊
+    quitGroupHandle() {
+      console.log("提出群聊");
     },
-    // 修改备注
-    editRemarkNameHandle() {
-      console.log("修改备注处理");
+    // 修改群昵称
+    editNicknameHandle() {
+      console.log("修改群昵称");
     },
-    // 分享好友
-    shareFriendHandle() {
-      console.log("分享好友处理");
+    // 分享群聊
+    shareGroupHandle() {
+      console.log("分享群聊");
     },
-    // 好友会话处理
-    friendDialogueHandle() {
-      this.setDialogueInfo(this.friendInfo);
-      this.addFriendDialogue({ friendId: this.friendInfo._id });
+    // 群聊会话处理
+    groupDialogueHandle() {
+      this.setDialogueInfo(this.groupInfo);
+      this.addGroupDialogue({ groupId: this.groupInfo._id });
     }
   }
 };

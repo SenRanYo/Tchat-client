@@ -4,14 +4,20 @@
     <!-- 会话页左边 -->
     <div class="dialogue__left">
       <!-- 列表栏头部组件 -->
-      <ListBarHead headTitle="会话列表" headNumber="共10条会话"></ListBarHead>
+      <ListBarHead
+        headTitle="会话列表"
+        :headNumber="`共${dialogueList.length}个会话`"
+      ></ListBarHead>
       <!-- 列表栏搜索组件 -->
       <ListBarSearch></ListBarSearch>
       <!-- 列表栏列表 -->
       <div class="dialogue-list">
         <el-scrollbar>
+          <div class="hint" v-if="dialogueList.length < 1">
+            <p>还没有会话内容,快去找人聊天吧</p>
+          </div>
           <DialogueListItem
-            v-for="(item, index) in dialogueData"
+            v-for="(item, index) in dialogueList"
             :key="index"
             :dialogueData="item"
           ></DialogueListItem>
@@ -20,7 +26,7 @@
     </div>
     <!-- 会话页右边 -->
     <div class="dialogue__right">
-      <ChatBar></ChatBar>
+      <DialogueChat></DialogueChat>
     </div>
   </div>
 </template>
@@ -33,9 +39,14 @@ export default {
   },
   computed: {
     ...mapGetters(["friendList", "groupList"]),
-    dialogueData() {
+    dialogueList() {
       let data = [...this.friendList, ...this.groupList];
-      return data;
+      let dialogueData = data.filter(function(obj) {
+        return obj.is_dialogue == true;
+      });
+      return dialogueData.sort(function(a, b) {
+        return b.send_time > a.send_time ? 1 : -1;
+      });
     }
   },
   created() {},
@@ -66,6 +77,16 @@ export default {
           user-select: none;
           cursor: default;
         }
+      }
+      // 没有数据时提示内容
+      .hint {
+        width: 250px;
+        height: 50px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
       }
     }
   }

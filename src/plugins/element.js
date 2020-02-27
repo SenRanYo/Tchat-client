@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-02-11 13:48:53
+ * @LastEditTime: 2020-02-27 15:26:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \tchat-client\src\plugins\element.js
+ */
 import Vue from "vue";
 import {
   Button,
@@ -14,6 +22,7 @@ import {
   Option,
   Select,
   FormItem,
+  Message,
   MessageBox,
   Divider,
   InfiniteScroll,
@@ -62,3 +71,4 @@ Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$message = Message;

@@ -1,7 +1,7 @@
 <!--
  * @Author: 好友页
  * @Date: 2020-02-11 13:58:57
- * @LastEditTime: 2020-02-25 21:50:47
+ * @LastEditTime: 2020-02-27 22:25:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\views\Friend.vue
@@ -11,12 +11,18 @@
   <div class="friend">
     <div class="friend__left">
       <!-- 列表栏头部组件 -->
-      <ListBarHead headTitle="好友列表" headNumber="共10个好友"></ListBarHead>
+      <ListBarHead
+        headTitle="好友列表"
+        :headNumber="`共${friendList.length}个好友`"
+      ></ListBarHead>
       <!-- 列表栏搜索组件 -->
       <ListBarSearch></ListBarSearch>
       <!-- 列表栏列表 -->
       <div class="friend-list">
         <el-scrollbar>
+          <div class="hint" v-if="friendList.length < 1">
+            <p>还没有好友,快去添加吧</p>
+          </div>
           <FriendListItem
             v-for="(item, index) in friendList"
             :key="index"
@@ -35,21 +41,10 @@ import { mapGetters } from "vuex";
 export default {
   name: "Friend",
   data() {
-    return {
-      infoBarData: {}
-    };
+    return {};
   },
   computed: {
     ...mapGetters(["friendList"])
-  },
-  created() {
-    // console.log(this.friendList);
-  },
-  methods: {
-    // 获取好友信息
-    getFriendInfo(data) {
-      this.infoBarData = data;
-    }
   }
 };
 </script>
@@ -77,6 +72,16 @@ export default {
           user-select: none;
           cursor: default;
         }
+      }
+      // 没有数据时提示内容
+      .hint {
+        width: 250px;
+        height: 50px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
       }
     }
   }

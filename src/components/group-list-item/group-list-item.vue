@@ -1,53 +1,50 @@
 <!--
- * @Author: 好友列表项组件
- * @Date: 2020-02-25 21:31:03
- * @LastEditTime: 2020-02-26 22:40:51
+ * @Author: 群聊列表项组件
+ * @Date: 2020-02-26 22:35:14
+ * @LastEditTime: 2020-02-26 22:57:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \tchat-client\src\components\friend-list-item\friend-list-item.vue
+ * @FilePath: \tchat-client\src\components\group-list-item\group-list-item.vue
  -->
 <template>
   <div
     :class="
-      friendData._id == friendInfo._id
-        ? 'friend-list-item friend-list-item--select'
-        : 'friend-list-item'
+      groupData._id == groupInfo._id
+        ? 'group-list-item group-list-item--select'
+        : 'group-list-item'
     "
-    @click="clickFriendHandle(friendData._id)"
+    @click="clickGroupHandle(groupData._id)"
   >
     <!-- item左边 -->
     <div class="item__left">
       <!-- 头像 -->
-      <UserAvatar
-        :src="friendData.avatar"
-        :name="friendData.name"
-        :status="friendData.online_status"
-        :type="friendData.type"
-      ></UserAvatar>
+      <el-avatar :size="40" :src="groupData.avatar">
+        <span>{{ groupData.name }}</span>
+      </el-avatar>
     </div>
     <!-- item右边 -->
     <div class="item__right">
       <!-- item右边顶部 -->
       <div class="item__right__top">
         <!-- 名称 -->
-        <span class="name" :title="friendData.name">
-          {{ friendData.name }}
+        <span class="name" :title="groupData.name">
+          {{ groupData.name }}
         </span>
-        <!-- 设备 -->
-        <span class="browser">
-          {{ friendData.browser ? friendData.browser : "离线" }}
+        <!-- 人数 -->
+        <span class="sum">
+          {{ `共${groupData.user_sum}人` }}
         </span>
       </div>
       <!-- item右边底部 -->
       <div class="item__right__bottom">
-        <!-- 签名-->
-        <span class="signature" :title="friendData.signature">
-          {{ friendData.signature }}
+        <!-- 群介绍-->
+        <span class="introduce" :title="groupData.introduce">
+          {{ groupData.introduce }}
         </span>
-        <!-- 系统 -->
-        <span class="device" v-if="friendData.device">
-          {{ friendData.device }}
-        </span>
+        <!-- 待定 -->
+        <!-- <span class="device" v-if="groupData.device">
+          {{ groupData.device }}
+        </span> -->
       </div>
     </div>
     <!-- hover显示动画元素 -->
@@ -61,29 +58,29 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 export default {
-  name: "FriendListItem",
+  name: "GroupListItem",
   props: {
-    friendData: Object
+    groupData: Object
   },
   data() {
     return {};
   },
   computed: {
     // 映射Getters
-    ...mapGetters(["friendInfo"])
+    ...mapGetters(["groupInfo"])
   },
   methods: {
     // 映射Mutations
-    ...mapMutations(["setFriendInfo"]),
-    clickFriendHandle() {
-      this.setFriendInfo(this.friendData);
+    ...mapMutations(["setGroupInfo"]),
+    clickGroupHandle() {
+      this.setGroupInfo(this.groupData);
     }
   }
 };
 </script>
 
 <style lang="scss">
-.friend-list-item {
+.group-list-item {
   width: 250px;
   height: 50px;
   padding: 5px 10px;
@@ -117,7 +114,7 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      .browser {
+      .sum {
         padding-left: 5px;
         flex-shrink: 0;
       }
@@ -128,7 +125,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      .signature {
+      .introduce {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -191,7 +188,7 @@ export default {
   }
 }
 // item激活样式
-.friend-list-item--select {
+.group-list-item--select {
   background-color: #6ac383;
 }
 </style>

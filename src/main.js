@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-02-11 11:52:17
- * @LastEditTime: 2020-02-25 19:58:46
- * @LastEditors: your name
+ * @LastEditTime: 2020-02-26 09:57:25
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\main.js
  */
@@ -13,6 +13,7 @@ import store from "./store";
 import upperFirst from "lodash/upperFirst";
 import camelCase from "lodash/camelCase";
 import EvaIcons from "vue-eva-icons";
+import * as filters from "./filters";
 import "./registerServiceWorker";
 import "./plugins/element.js";
 import "./assets/iconfont/iconfont.css";
@@ -21,6 +22,11 @@ import "./assets/style/reset.scss";
 Vue.config.productionTip = false;
 
 Vue.use(EvaIcons);
+
+// 注册过滤器
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key]);
+});
 
 const requireComponent = require.context(
   // 其组件目录的相对路径

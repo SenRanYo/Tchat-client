@@ -1,7 +1,7 @@
 /*
  * @Author: 好友相关模块
  * @Date: 2020-02-13 18:04:18
- * @LastEditTime: 2020-02-25 21:33:42
+ * @LastEditTime: 2020-02-27 21:34:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\modules\friend.js
@@ -15,6 +15,24 @@ const mutations = {
   // 设置好友列表
   setFriendList(state, data) {
     state.friendList = data;
+  },
+  // 更新好友列表
+  updateFriendList(state, data) {
+    // 判断列表中是否有更新数据_id的对象
+    let exists = state.friendList.some(item => {
+      if (item._id == data._id) {
+        return true;
+      }
+    });
+    // 存在对象就更新
+    if (exists) {
+      state.friendList = state.friendList.map(item => {
+        return item._id == data._id ? data : item;
+      });
+    } else {
+      // 不存在合并
+      state.friendList.concat(data);
+    }
   },
   // 设置好友信息
   setFriendInfo(state, data) {
@@ -36,7 +54,7 @@ const actions = {
   onGetFriendStatus({ commit, rootState }) {
     rootState.socket.on("onGetFriendStatus", response => {
       if (response.result) {
-        commit("setFriendList", response.data);
+        commit("updateFriendList", response.data);
         console.log("好友列表更新数据", response.data);
       }
     });

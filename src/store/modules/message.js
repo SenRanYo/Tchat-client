@@ -1,7 +1,7 @@
 /*
  * @Author: 消息模块
  * @Date: 2020-02-24 13:43:15
- * @LastEditTime: 2020-02-25 21:13:25
+ * @LastEditTime: 2020-02-27 22:17:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\modules\message.js
@@ -27,12 +27,20 @@ const actions = {
       }
     });
   },
-  // 发送消息
-  sendFriendMessage({ rootState }) {
-    rootState.socket.emit("sendFriendMessage", response => {
-      if (response.result) {
-        console.log(response);
-      }
+  // 发送好友消息
+  sendFriendMessage({ rootState }, params) {
+    rootState.socket.emit("sendFriendMessage", params, response => {
+      // if (response.result) {
+      // }
+      console.log(response);
+    });
+  },
+  // 发送群聊消息
+  sendGroupMessage({ rootState }, params) {
+    rootState.socket.emit("sendGroupMessage", params, response => {
+      // if (response.result) {
+      // }
+      console.log(response);
     });
   }
 };

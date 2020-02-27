@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话列表项组件
  * @Date: 2020-02-25 11:09:47
- * @LastEditTime: 2020-02-26 00:43:26
+ * @LastEditTime: 2020-02-27 22:08:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\DialogueListBar.vue
@@ -9,11 +9,11 @@
 <template>
   <div
     :class="
-      dialogueData._id == dialogueId
+      dialogueData._id == dialogueInfo._id
         ? 'dialogue-list-item dialogue-list-item--select'
         : 'dialogue-list-item'
     "
-    @click="clickDialogueHandle(dialogueData._id)"
+    @click="clickDialogueHandle"
   >
     <!-- item左边 -->
     <div class="item__left">
@@ -44,9 +44,11 @@
         }}</span>
         <!-- 时间 -->
         <span class="time">
-          <!-- 需要对时间格式化 -->
-          <!-- {{ dialogueData.send_time ? dialogueData.send_time : dialogueData.chat_time }} -->
-          20:00
+          {{
+            dialogueData.send_time
+              ? dialogueData.send_time
+              : dialogueData.chat_time | formatListDate
+          }}
         </span>
       </div>
       <!-- 如果为好友会话 -->
@@ -118,7 +120,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "DialogueListItem",
   props: {
@@ -129,7 +131,7 @@ export default {
   },
   computed: {
     // 映射Getters
-    ...mapGetters(["dialogueId"]),
+    ...mapGetters(["dialogueInfo"]),
     // 效验好友消息类型
     verifyFriendMessage() {
       return (type, value) => {
@@ -168,15 +170,24 @@ export default {
     }
   },
   methods: {
+    // 映射Actions
+    ...mapActions(["deleteFriendDialogue", "deleteGroupDialogue"]),
     // 映射Mutations
-    ...mapMutations(["setDialogueId"]),
+    ...mapMutations(["setDialogueInfo"]),
     // 点击会话处理
-    clickDialogueHandle(id) {
-      this.setDialogueId(id);
+    clickDialogueHandle() {
+      this.setDialogueInfo(this.dialogueData);
     },
     // 删除会话处理
     deleteDialogueHandle(id, type) {
-      console.log(id, type);
+      // 好友
+      if (type == "friend") {
+        this.deleteFriendDialogue({ friendId: id });
+      }
+      // 群聊
+      if (type == "group") {
+        this.deleteGroupDialogue({ groupId: id });
+      }
     }
   }
 };

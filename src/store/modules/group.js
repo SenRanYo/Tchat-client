@@ -1,7 +1,7 @@
 /*
- * @Author: your name
+ * @Author: 群聊模块
  * @Date: 2020-02-13 18:56:14
- * @LastEditTime: 2020-02-25 21:12:34
+ * @LastEditTime: 2020-02-27 22:15:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\modules\group.js
@@ -15,6 +15,23 @@ const state = {
 const mutations = {
   setGroupList(state, data) {
     state.groupList = data;
+  },
+  updateGroupList(state, data) {
+    // 判断列表中是否有更新数据_id的对象
+    let exists = state.groupList.some(item => {
+      if (item._id == data._id) {
+        return true;
+      }
+    });
+    // 存在对象就更新
+    if (exists) {
+      state.groupList = state.groupList.map(item => {
+        return item._id == data._id ? data : item;
+      });
+    } else {
+      // 不存在合并
+      state.groupList.concat(data);
+    }
   },
   setGroupInfo(state, data) {
     state.groupInfo = data;
@@ -35,17 +52,17 @@ const actions = {
     });
   },
   // 监听获取群聊状态数据
-  onGetGroupStatus({ commit, rootState }, groupId) {
-    rootState.socket.on("onGetGroupStatus", { groupId }, response => {
+  onGetGroupStatus({ commit, rootState }) {
+    rootState.socket.on("onGetGroupStatus", response => {
       if (response.result) {
-        commit("setGroupList", response.data);
+        commit("updateGroupList", response.data);
         console.log("群聊状态数据", response.data);
       }
     });
   },
   // 监听获取添加群聊数据
-  onGetAddGroup({ commit, rootState }, groupId) {
-    rootState.socket.on("onGetAddGroup", { groupId }, response => {
+  onGetAddGroup({ commit, rootState }) {
+    rootState.socket.on("onGetAddGroup", response => {
       if (response.result) {
         commit("setGroupList", response.data);
         console.log("加入群聊数据", response.data);
@@ -53,8 +70,8 @@ const actions = {
     });
   },
   // 监听获取删除群聊数据
-  onGetDeleteGroup({ commit, rootState }, groupId) {
-    rootState.socket.on("onGetDeleteGroup", { groupId }, response => {
+  onGetDeleteGroup({ commit, rootState }) {
+    rootState.socket.on("onGetDeleteGroup", response => {
       if (response.result) {
         commit("setGroupList", response.data);
         console.log("删除群聊数据", response.data);
