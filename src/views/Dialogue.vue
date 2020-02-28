@@ -4,10 +4,10 @@
     <!-- 会话页左边 -->
     <div class="dialogue__left">
       <!-- 列表栏头部组件 -->
-      <ListBarHead
+      <ListHead
         headTitle="会话列表"
         :headNumber="`共${dialogueList.length}个会话`"
-      ></ListBarHead>
+      ></ListHead>
       <!-- 列表栏搜索组件 -->
       <ListBarSearch></ListBarSearch>
       <!-- 列表栏列表 -->

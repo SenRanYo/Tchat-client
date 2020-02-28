@@ -1,7 +1,7 @@
 <!--
  * @Author: 用户头像组件
  * @Date: 2020-02-24 19:23:36
- * @LastEditTime: 2020-02-25 23:46:51
+ * @LastEditTime: 2020-02-28 12:19:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\UserAvatar.vue
@@ -9,7 +9,7 @@
 <template>
   <div
     :class="
-      status == true ? 'user-avatar' : 'user-avatar  user-avatar--grayscale'
+      checkStatus == true ? 'user-avatar' : 'user-avatar user-avatar--grayscale'
     "
     :style="{ width: size + 'px', height: size + 'px' }"
   >
@@ -34,11 +34,20 @@ export default {
     src: { type: String },
     name: { type: String },
     status: { type: Boolean },
+    openStayus: { type: Boolean, default: false },
     type: { type: Number },
     size: { type: Number, default: 40 }
   },
-  data() {
-    return {};
+  computed: {
+    checkStatus() {
+      if (!this.openStayus) {
+        return true;
+      } else if (this.status) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>

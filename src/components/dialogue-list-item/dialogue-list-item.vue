@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话列表项组件
  * @Date: 2020-02-25 11:09:47
- * @LastEditTime: 2020-02-28 00:26:50
+ * @LastEditTime: 2020-02-28 15:41:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\DialogueListBar.vue
@@ -23,6 +23,7 @@
         :src="dialogueData.avatar"
         :name="dialogueData.name"
         :status="dialogueData.online_status"
+        :openStayus="true"
         :type="dialogueData.type"
       ></UserAvatar>
       <!-- 群聊头像 -->
@@ -177,16 +178,29 @@ export default {
       "getMessageRecord"
     ]),
     // 映射Mutations
-    ...mapMutations(["setDialogueInfo"]),
+    ...mapMutations(["setDialogueInfo", "setMessageRecord"]),
     // 点击会话处理
     clickDialogueHandle() {
+      // 判断是否重复点击
+      if (this.dialogueData._id == this.dialogueInfo._id) return;
       // 设置会话数据
       this.setDialogueInfo(this.dialogueData);
-      // 获取消息记录
-      this.getMessageRecord({
-        type: this.dialogueData.dialogue_type,
-        id: this.dialogueData._id
-      });
+      // 情况当前聊天数据避免闪烁
+      this.setMessageRecord([]);
+      // 获取好友消息记录
+      if (this.dialogueData.dialogue_type == "friend") {
+        this.getMessageRecord({
+          type: this.dialogueData.dialogue_type,
+          friendId: this.dialogueData._id
+        });
+      }
+      // 获取群聊消息记录
+      if (this.dialogueData.dialogue_type == "group") {
+        this.getMessageRecord({
+          type: this.dialogueData.dialogue_type,
+          groupId: this.dialogueData._id
+        });
+      }
     },
     // 删除会话处理
     deleteDialogueHandle(id, type) {

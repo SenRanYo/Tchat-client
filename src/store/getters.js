@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-11 13:57:02
- * @LastEditTime: 2020-02-27 11:31:59
+ * @LastEditTime: 2020-02-28 09:28:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\getters.js
@@ -18,10 +18,7 @@ export const friendMessageList = state => state.friend.friendMessageList; // 好
 export const dialogueList = state => state.dialogue.dialogueList; // 所有聊天内容列表
 
 // 消息相关
-export const friendDialogue = state => state.message.friendDialogue; // 好友会话列表
-export const friendMessage = state => state.message.friendMessage; // 好哟消息列表
-export const groupDialogue = state => state.message.groupDialogue; // 群聊会话列表
-export const groupMessage = state => state.message.groupMessage; // 群聊消息列表
+export const messageRecord = state => state.message.messageRecord; // 消息记录
 
 // 会话相关
 export const dialogueInfo = state => state.dialogue.dialogueInfo; // 当前会话人信息

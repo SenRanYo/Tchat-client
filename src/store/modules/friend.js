@@ -1,7 +1,7 @@
 /*
  * @Author: 好友相关模块
  * @Date: 2020-02-13 18:04:18
- * @LastEditTime: 2020-02-27 21:34:19
+ * @LastEditTime: 2020-02-28 18:50:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\modules\friend.js
@@ -46,7 +46,7 @@ const actions = {
     rootState.socket.on("onGetFriendList", response => {
       if (response.result) {
         commit("setFriendList", response.data);
-        console.log("好友列表数据", response.data);
+        console.log("服务端推送好友列表数据", response.data);
       }
     });
   },
@@ -55,7 +55,7 @@ const actions = {
     rootState.socket.on("onGetFriendStatus", response => {
       if (response.result) {
         commit("updateFriendList", response.data);
-        console.log("好友列表更新数据", response.data);
+        console.log("服务端推送好友列表更新数据", response.data);
       }
     });
   },

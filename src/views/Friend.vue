@@ -1,7 +1,7 @@
 <!--
  * @Author: 好友页
  * @Date: 2020-02-11 13:58:57
- * @LastEditTime: 2020-02-27 22:25:21
+ * @LastEditTime: 2020-02-28 10:50:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\views\Friend.vue
@@ -11,10 +11,10 @@
   <div class="friend">
     <div class="friend__left">
       <!-- 列表栏头部组件 -->
-      <ListBarHead
+      <ListHead
         headTitle="好友列表"
         :headNumber="`共${friendList.length}个好友`"
-      ></ListBarHead>
+      ></ListHead>
       <!-- 列表栏搜索组件 -->
       <ListBarSearch></ListBarSearch>
       <!-- 列表栏列表 -->

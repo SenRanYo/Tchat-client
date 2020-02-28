@@ -1,7 +1,7 @@
 <!--
  * @Author: 群聊列表项组件
  * @Date: 2020-02-26 22:35:14
- * @LastEditTime: 2020-02-26 22:57:17
+ * @LastEditTime: 2020-02-28 12:06:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\group-list-item\group-list-item.vue
@@ -18,9 +18,11 @@
     <!-- item左边 -->
     <div class="item__left">
       <!-- 头像 -->
-      <el-avatar :size="40" :src="groupData.avatar">
-        <span>{{ groupData.name }}</span>
-      </el-avatar>
+      <UserAvatar
+        :src="groupData.avatar"
+        :name="groupData.name"
+        :type="groupData.type"
+      ></UserAvatar>
     </div>
     <!-- item右边 -->
     <div class="item__right">

@@ -1,7 +1,7 @@
 <!--
  * @Author: 聊天栏组件
  * @Date: 2020-02-27 11:16:23
- * @LastEditTime: 2020-02-27 15:51:06
+ * @LastEditTime: 2020-02-28 16:26:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\dialogue-chat\dialogue-chat.vue
@@ -29,7 +29,15 @@
       </div>
     </div>
     <!-- 会话聊天主体 -->
-    <div class="dialogue-chat__main"></div>
+    <div class="dialogue-chat__main">
+      <el-scrollbar tag="ul" class="scrollbar">
+        <DialogueChatRecord
+          v-for="(item, index) in messageRecord"
+          :key="index"
+          :recordData="item"
+        ></DialogueChatRecord
+      ></el-scrollbar>
+    </div>
     <!-- 会话聊天底部 -->
     <div class="dialogue-chat__footer">
       <DialogueChatInput></DialogueChatInput>
@@ -47,11 +55,28 @@ export default {
   },
   mixins: [Mixin],
   computed: {
-    ...mapGetters(["dialogueInfo"])
+    ...mapGetters(["dialogueInfo", "messageRecord", "userInfo"])
   },
   methods: {
     // 删除会话
-    deleteDialogueHandle() {}
+    deleteDialogueHandle() {
+      console.log(this.messageRecord);
+    },
+    setScrollBottom(target) {
+      if (!target) throw new Error("target is not existed");
+      let el = document.documentElement.querySelector(target);
+      el.scrollTop = el.scrollHeight;
+    }
+  },
+  watch: {
+    messageRecord: {
+      deep: true,
+      handler: function() {
+        this.$nextTick(() => {
+          this.setScrollBottom(".scrollbar .el-scrollbar__wrap");
+        });
+      }
+    }
   }
 };
 </script>
@@ -101,6 +126,15 @@ export default {
   .dialogue-chat__main {
     width: 100%;
     height: calc(100% - 210px);
+    // 列表滚动栏样式
+    .el-scrollbar {
+      height: 100%;
+      .el-scrollbar__wrap {
+        overflow-x: hidden;
+        // user-select: none;
+        cursor: default;
+      }
+    }
   }
   // 会话聊天底部样式
   .dialogue-chat__footer {

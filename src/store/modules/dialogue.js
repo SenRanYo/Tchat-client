@@ -1,7 +1,7 @@
 /*
  * @Author: 会话模块
  * @Date: 2020-02-25 19:42:55
- * @LastEditTime: 2020-02-27 22:12:54
+ * @LastEditTime: 2020-02-28 18:02:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\modules\dialogue.js
@@ -9,8 +9,7 @@
 import router from "../../router/index";
 
 const state = {
-  dialogueInfo: {},
-  dialogueMessageRecord: ""
+  dialogueInfo: {}
 };
 
 const mutations = {
@@ -26,7 +25,6 @@ const actions = {
       if (response.result) {
         // 添加成功跳转路由
         router.push({ name: "dialogue" });
-        console.log(response);
       }
     });
   },
@@ -36,7 +34,6 @@ const actions = {
       if (response.result) {
         // 添加成功跳转路由
         router.push({ name: "dialogue" });
-        console.log(response);
       }
     });
   },
@@ -45,7 +42,6 @@ const actions = {
     rootState.socket.emit("deleteFriendDialogue", params, response => {
       if (response.result) {
         commit("setDialogueInfo", {});
-        console.log(response);
       }
     });
   },
@@ -54,7 +50,6 @@ const actions = {
     rootState.socket.emit("deleteGroupDialogue", params, response => {
       if (response.result) {
         commit("setDialogueInfo", {});
-        console.log(response);
       }
     });
   }

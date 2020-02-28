@@ -1,7 +1,7 @@
 /*
  * @Author: 根级别actions
  * @Date: 2020-02-11 13:56:35
- * @LastEditTime: 2020-02-27 17:08:21
+ * @LastEditTime: 2020-02-28 18:33:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\actions.js
@@ -21,6 +21,7 @@ export const actions = {
       dispatch("onGetUserInfo");
       // 消息相关
       dispatch("onGetMessageRecord");
+      dispatch("onUpdateMessageRecord");
       // 好友相关
       dispatch("onGetFriendList");
       dispatch("onGetFriendStatus");

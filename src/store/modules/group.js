@@ -1,7 +1,7 @@
 /*
  * @Author: 群聊模块
  * @Date: 2020-02-13 18:56:14
- * @LastEditTime: 2020-02-28 00:18:27
+ * @LastEditTime: 2020-02-28 18:50:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\modules\group.js
@@ -47,7 +47,7 @@ const actions = {
     rootState.socket.on("onGetGroupList", response => {
       if (response.result) {
         commit("setGroupList", response.data);
-        console.log("群聊列表数据", response.data);
+        console.log("服务端推送群聊列表数据", response.data);
       }
     });
   },
@@ -56,7 +56,7 @@ const actions = {
     rootState.socket.on("onGetGroupStatus", response => {
       if (response.result) {
         commit("updateGroupList", response.data);
-        console.log("群聊状态数据", response.data);
+        console.log("服务端推送群聊列表更新数据", response.data);
       }
     });
   },

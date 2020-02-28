@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话输入框
  * @Date: 2020-02-27 12:09:57
- * @LastEditTime: 2020-02-27 19:09:52
+ * @LastEditTime: 2020-02-28 16:14:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\dialogue-chat-input\dialogue-chat-input.vue
@@ -34,8 +34,8 @@
     </div>
     <div class="dialogue-chat-input__footer">
       <el-button
-        type="primary"
         size="small"
+        type="success"
         :disabled="checkValue"
         @click="sendMessageHandle"
       >
@@ -87,6 +87,7 @@ export default {
           content: this.inputValue
         };
         this.sendFriendMessage(params);
+        this.inputValue = "";
       }
       // 群聊消息
       if (this.dialogueInfo.dialogue_type == "group") {
@@ -96,6 +97,7 @@ export default {
           content: this.inputValue
         };
         this.sendGroupMessage(params);
+        this.inputValue = "";
       }
     },
     // 回车发送消息

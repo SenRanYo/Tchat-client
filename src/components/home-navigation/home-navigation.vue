@@ -6,6 +6,7 @@
         :src="userInfo.avatar"
         :name="userInfo.name"
         :status="userInfo.online_status"
+        :openStayus="true"
         :type="userInfo.type"
       ></UserAvatar>
       <!-- hover显示动画元素 -->

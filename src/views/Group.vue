@@ -1,7 +1,7 @@
 <!--
  * @Author: 群聊页
  * @Date: 2020-02-11 13:59:24
- * @LastEditTime: 2020-02-27 22:25:48
+ * @LastEditTime: 2020-02-28 10:50:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\views\Group.vue
@@ -11,10 +11,10 @@
   <div class="group">
     <div class="group__left">
       <!-- 列表栏头部组件 -->
-      <ListBarHead
+      <ListHead
         headTitle="好友列表"
         :headNumber="`共${groupList.length}个群聊`"
-      ></ListBarHead>
+      ></ListHead>
       <!-- 列表栏搜索组件 -->
       <ListBarSearch></ListBarSearch>
       <!-- 列表栏列表 -->

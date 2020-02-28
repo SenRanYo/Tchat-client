@@ -233,7 +233,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "ListBarHead",
+  name: "ListHead",
   props: {
     headTitle: {
       type: String

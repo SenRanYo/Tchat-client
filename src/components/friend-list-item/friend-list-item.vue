@@ -1,7 +1,7 @@
 <!--
  * @Author: 好友列表项组件
  * @Date: 2020-02-25 21:31:03
- * @LastEditTime: 2020-02-26 22:40:51
+ * @LastEditTime: 2020-02-28 12:07:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\friend-list-item\friend-list-item.vue
@@ -22,6 +22,7 @@
         :src="friendData.avatar"
         :name="friendData.name"
         :status="friendData.online_status"
+        :openStayus="true"
         :type="friendData.type"
       ></UserAvatar>
     </div>
