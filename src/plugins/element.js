@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-11 13:48:53
- * @LastEditTime: 2020-02-27 15:26:10
+ * @LastEditTime: 2020-03-02 01:15:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\plugins\element.js
@@ -38,7 +38,8 @@ import {
   Dialog,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Upload
 } from "element-ui";
 
 Vue.use(Button);
@@ -70,5 +71,6 @@ Vue.use(Dialog);
 Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.use(Upload);
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$message = Message;

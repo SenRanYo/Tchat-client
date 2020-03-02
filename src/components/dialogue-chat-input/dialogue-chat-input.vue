@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话输入框
  * @Date: 2020-02-27 12:09:57
- * @LastEditTime: 2020-02-28 16:14:47
+ * @LastEditTime: 2020-03-02 17:48:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\dialogue-chat-input\dialogue-chat-input.vue
@@ -9,8 +9,12 @@
 <template>
   <div class="dialogue-chat-input">
     <div class="dialogue-chat-input__head">
+      <!-- emoji组件 -->
       <Emoji class="button" @selectEmoji="insertEmoji"></Emoji>
-      <eva-icon class="button" name="image-outline" fill="#84869D"></eva-icon>
+      <!-- 图片上传 -->
+      <FileUpload>
+        <eva-icon class="button" name="image-outline" fill="#84869D"></eva-icon>
+      </FileUpload>
       <eva-icon
         class="button"
         name="folder-add-outline"
@@ -27,6 +31,7 @@
           placeholder="请输入聊天内容"
           v-model="inputValue"
           @keydown.native="enterSendHandle"
+          @paste.native="paste"
         >
           ></el-input
         >
@@ -114,6 +119,21 @@ export default {
           duration: 2000
         });
         event.preventDefault();
+      }
+    },
+    // 粘贴处理
+    paste(e) {
+      const clipboardData = e.clipboardData || e.originalEvent.clipboardData;
+      const items = clipboardData && clipboardData.items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].kind === "file") {
+          e.preventDefault();
+          const file = items[i].getAsFile();
+          if (!file) {
+            return;
+          }
+          console.log(file);
+        }
       }
     }
   }

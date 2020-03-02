@@ -39,6 +39,22 @@
       <span class="top"></span>
       <span class="left"></span>
     </router-link>
+    <router-link class="navigation__btn" :to="{ path: '/home/search' }">
+      <eva-icon name="search" fill="#797A96"></eva-icon>
+      <!-- hover显示动画元素 -->
+      <span class="bottom"></span>
+      <span class="right"></span>
+      <span class="top"></span>
+      <span class="left"></span>
+    </router-link>
+    <router-link class="navigation__btn" :to="{ path: '/home/record' }">
+      <eva-icon name="clock" fill="#797A96"></eva-icon>
+      <!-- hover显示动画元素 -->
+      <span class="bottom"></span>
+      <span class="right"></span>
+      <span class="top"></span>
+      <span class="left"></span>
+    </router-link>
     <router-link class="navigation__btn" :to="{ path: '/home/setting' }">
       <eva-icon name="settings-2" fill="#797A96"></eva-icon>
       <!-- hover显示动画元素 -->

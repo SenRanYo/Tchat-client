@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话聊天记录项组件
  * @Date: 2020-02-27 12:11:25
- * @LastEditTime: 2020-02-28 16:12:17
+ * @LastEditTime: 2020-03-01 22:43:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\dialogue-chat-record\dialogue-chat-record.vue
@@ -38,7 +38,7 @@
         <span v-if="dialogueInfo.dialogue_type == 'group'">
           {{ recordData.user_name }}
         </span>
-        <span>{{ recordData.send_time | formatListDate }}</span>
+        <span>{{ recordData.send_time | formatMessageDate }}</span>
       </div>
       <div class="content-bottom">
         <pre>{{ recordData.content }}</pre>
@@ -96,6 +96,7 @@ export default {
     }
     // 内容底部
     .content-bottom {
+      min-height: 35px;
       margin-top: 2px;
       padding: 8px;
       border-radius: 3px;

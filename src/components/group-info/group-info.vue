@@ -1,7 +1,7 @@
 <!--
  * @Author: 群聊信息
  * @Date: 2020-02-26 22:31:56
- * @LastEditTime: 2020-02-27 22:16:25
+ * @LastEditTime: 2020-02-29 19:12:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\group-info\group-info.vue
@@ -117,8 +117,7 @@ export default {
     },
     // 群聊会话处理
     groupDialogueHandle() {
-      this.setDialogueInfo(this.groupInfo);
-      this.addGroupDialogue({ groupId: this.groupInfo._id });
+      this.addGroupDialogue(this.groupInfo._id);
     }
   }
 };

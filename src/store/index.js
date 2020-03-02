@@ -1,7 +1,7 @@
 /*
  * @Author: Vuex
  * @Date: 2020-02-11 11:52:17
- * @LastEditTime: 2020-02-25 21:01:41
+ * @LastEditTime: 2020-03-01 19:39:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\store\index.js
@@ -16,6 +16,7 @@ import dialogue from "./modules/dialogue";
 import message from "./modules/message";
 import friend from "./modules/friend";
 import group from "./modules/group";
+import search from "./modules/search";
 
 Vue.use(Vuex);
 
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     dialogue,
     message,
     friend,
-    group
+    group,
+    search
   }
 });

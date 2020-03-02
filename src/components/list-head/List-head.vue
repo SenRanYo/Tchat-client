@@ -43,10 +43,10 @@
       <!-- 搜索内容 -->
       <div class="content-wrap">
         <el-scrollbar tag="ul">
-          <p v-if="userListData.length == 0" class="content-hint">暂无内容</p>
+          <p v-if="searchUserList.length == 0" class="content-hint">暂无内容</p>
           <li
             class="list-item"
-            v-for="(item, index) in userListData"
+            v-for="(item, index) in searchUserList"
             :key="index"
           >
             <div class="list-item__top">
@@ -231,7 +231,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "ListHead",
   props: {
@@ -260,41 +260,38 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["socket"])
+    ...mapGetters(["searchUserList"])
+  },
+  watch: {
+    searchUserList: val => {
+      console.log(val);
+    }
   },
   methods: {
+    // 映射Actions
+    ...mapActions(["addFriend", "createGroup", "searchUser"]),
     // 下拉菜单点击处理
     handleCommand(command) {
-      if (command === "addFriend") {
-        this.dialogAddFriendVisible = true;
-      }
-      if (command === "addGroup") {
-        this.dialogAddGroupVisible = true;
-      }
-      if (command === "createGroup") {
-        this.dialogCreateGroupVisible = true;
+      switch (command) {
+        case "addFriend":
+          this.dialogAddFriendVisible = true;
+          break;
+        case "addGroup":
+          this.dialogAddGroupVisible = true;
+          break;
+        case "createGroup":
+          this.dialogAddGroupVisible = true;
+          break;
       }
     },
     // 搜索用户处理
     searchUserHandle() {
       this.userKeyWord = this.searchUserName;
-      this.socket.emit(
-        "searchUser",
-        { userName: this.searchUserName },
-        response => {
-          if (!response.result) {
-            this.$alert(response.message, "提示");
-          }
-          this.userListData = response.data;
-          console.log(response);
-        }
-      );
+      this.searchUser(this.searchUserName);
     },
     // 添加好友处理
     addFriendHandle(id) {
-      this.socket.emit("addFriend", { friendId: id }, response => {
-        console.log(response);
-      });
+      this.addFriend(id);
     },
     // 添加好友弹窗关闭处理
     addFriendDialogClose(done) {
@@ -344,9 +341,7 @@ export default {
     },
     // 创建群聊处理
     createGroupHandle() {
-      this.socket.emit("createGroup", this.groupForm, response => {
-        console.log(response);
-      });
+      this.createGroup(this.groupForm);
     },
     // 创建群聊弹窗关闭处理
     createGroupDialogClose(done) {

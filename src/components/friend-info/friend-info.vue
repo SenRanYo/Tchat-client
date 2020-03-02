@@ -1,7 +1,7 @@
 <!--
  * @Author: 好友信息
  * @Date: 2020-02-25 21:48:40
- * @LastEditTime: 2020-02-27 20:10:40
+ * @LastEditTime: 2020-03-02 11:25:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\friend-info\friend-info.vue
@@ -113,8 +113,7 @@ export default {
     },
     // 好友会话处理
     friendDialogueHandle() {
-      this.setDialogueInfo(this.friendInfo);
-      this.addFriendDialogue({ friendId: this.friendInfo._id });
+      this.addFriendDialogue(this.friendInfo._id);
     }
   }
 };

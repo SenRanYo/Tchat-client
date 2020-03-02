@@ -1,7 +1,7 @@
 <!--
  * @Author: 聊天栏组件
  * @Date: 2020-02-27 11:16:23
- * @LastEditTime: 2020-02-28 16:26:40
+ * @LastEditTime: 2020-03-01 09:19:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\dialogue-chat\dialogue-chat.vue
@@ -32,7 +32,7 @@
     <div class="dialogue-chat__main">
       <el-scrollbar tag="ul" class="scrollbar">
         <DialogueChatRecord
-          v-for="(item, index) in messageRecord"
+          v-for="(item, index) in chatMessageRecord"
           :key="index"
           :recordData="item"
         ></DialogueChatRecord
@@ -55,21 +55,23 @@ export default {
   },
   mixins: [Mixin],
   computed: {
-    ...mapGetters(["dialogueInfo", "messageRecord", "userInfo"])
+    ...mapGetters(["dialogueInfo", "chatMessageRecord", "userInfo"])
   },
   methods: {
     // 删除会话
     deleteDialogueHandle() {
-      console.log(this.messageRecord);
+      console.log(this.chatMessageRecord);
     },
     setScrollBottom(target) {
       if (!target) throw new Error("target is not existed");
       let el = document.documentElement.querySelector(target);
-      el.scrollTop = el.scrollHeight;
+      if (el) {
+        el.scrollTop = el.scrollHeight;
+      }
     }
   },
   watch: {
-    messageRecord: {
+    chatMessageRecord: {
       deep: true,
       handler: function() {
         this.$nextTick(() => {

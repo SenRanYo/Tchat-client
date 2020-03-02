@@ -45,7 +45,7 @@ export default {
         return obj.is_dialogue == true;
       });
       return dialogueData.sort(function(a, b) {
-        return b.send_time > a.send_time ? 1 : -1;
+        return b.chat_time > a.chat_time ? 1 : -1;
       });
     }
   },

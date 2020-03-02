@@ -1,7 +1,7 @@
 <!--
  * @Author: 会话列表项组件
  * @Date: 2020-02-25 11:09:47
- * @LastEditTime: 2020-02-28 15:41:56
+ * @LastEditTime: 2020-03-01 16:30:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \tchat-client\src\components\DialogueListBar.vue
@@ -175,42 +175,38 @@ export default {
     ...mapActions([
       "deleteFriendDialogue",
       "deleteGroupDialogue",
-      "getMessageRecord"
+      "findFriendChatRecord",
+      "findGroupChatRecord"
     ]),
     // 映射Mutations
-    ...mapMutations(["setDialogueInfo", "setMessageRecord"]),
+    ...mapMutations(["setDialogueInfo", "setChatMessageRecord"]),
     // 点击会话处理
     clickDialogueHandle() {
       // 判断是否重复点击
       if (this.dialogueData._id == this.dialogueInfo._id) return;
       // 设置会话数据
       this.setDialogueInfo(this.dialogueData);
-      // 情况当前聊天数据避免闪烁
-      this.setMessageRecord([]);
+      // 清空当前聊天数据避免闪烁
+      this.setChatMessageRecord([]);
       // 获取好友消息记录
       if (this.dialogueData.dialogue_type == "friend") {
-        this.getMessageRecord({
-          type: this.dialogueData.dialogue_type,
-          friendId: this.dialogueData._id
-        });
+        this.findFriendChatRecord(this.dialogueData._id);
       }
       // 获取群聊消息记录
       if (this.dialogueData.dialogue_type == "group") {
-        this.getMessageRecord({
-          type: this.dialogueData.dialogue_type,
-          groupId: this.dialogueData._id
-        });
+        this.findGroupChatRecord(this.dialogueData._id);
       }
     },
     // 删除会话处理
     deleteDialogueHandle(id, type) {
+      console.log("删除的会话类型为", type);
       // 好友
       if (type == "friend") {
-        this.deleteFriendDialogue({ friendId: id });
+        this.deleteFriendDialogue(id);
       }
       // 群聊
       if (type == "group") {
-        this.deleteGroupDialogue({ groupId: id });
+        this.deleteGroupDialogue(id);
       }
     }
   }
